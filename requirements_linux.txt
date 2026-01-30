@@ -1,0 +1,23 @@
+# Requisitos do projeto YOLOv7 + BoT-SORT para Linux
+# Instalação: pip install -r requirements_linux.txt
+
+# Core dependencies
+torch>=1.9.0
+torchvision>=0.10.0
+opencv-python>=4.5.0
+numpy>=1.19.0
+scipy>=1.5.0
+PyYAML>=5.4.0
+
+# Para tracking
+lap>=0.4.0
+
+# Opcional: para Re-ID (descomente se usar)
+# fast-reid
+
+# Opcional: para visualização avançada
+matplotlib>=3.3.0
+
+# Dependências adicionais recomendadas para Linux
+Pillow>=8.0.0          # Processamento de imagens
+tqdm>=4.50.0           # Barras de progresso

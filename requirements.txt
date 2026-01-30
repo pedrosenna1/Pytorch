@@ -1,0 +1,18 @@
+# Requisitos do projeto YOLOv7 + BoT-SORT
+
+# Core dependencies
+torch>=1.9.0
+torchvision>=0.10.0
+opencv-python>=4.5.0
+numpy>=1.19.0
+scipy>=1.5.0
+PyYAML>=5.4.0
+
+# Para tracking
+lap>=0.4.0
+
+# Opcional: para Re-ID (comente se não usar)
+# fast-reid
+
+# Opcional: para visualização avançada
+matplotlib>=3.3.0

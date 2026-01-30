@@ -1,0 +1,50 @@
+# ===== Stream =====
+stream_url: "https://dev.tixxi.rio/outvideo3/?CODE=003215&KEY=G5325"
+
+# ===== Detector (YOLOv7 PyTorch) =====
+weights: "weights/yolov7.pt"
+device: "cpu"          # "cuda:0" se tiver GPU
+imgsz: 640             # reduzido para melhorar FPS (480 é um bom equilíbrio; 416 é mais rápido)
+conf_thres: 0.20       # MUITO baixo - há duplo filtro no detector
+
+# ===== Confidence Thresholds por Classe =====
+conf_person: 0.40      # Pessoas (mais permissivo)
+conf_vehicle: 0.55     # Carros, motos, ônibus, caminhões (mais rigoroso)
+conf_bicycle: 0.45     # Bicicletas (intermediário)
+
+# ===== Classes que você quer detectar (COCO IDs) =====
+# person=0, bicycle=1, car=2, motorcycle=3, bus=5, truck=7
+classes:
+  person: 0
+  bicycle: 1
+  car: 2
+  motorcycle: 3
+  bus: 5
+  truck: 7
+
+# ===== Multiplicadores (pessoas equivalentes por objeto) =====
+multipliers:
+  person: 1
+  bicycle: 1
+  car: 1.5
+  motorcycle: 1
+  bus: 20
+  truck: 1
+
+# ===== BoT-SORT params =====
+track_high_thresh: 0.40      # equilíbrio: não perde detecções boas
+track_low_thresh: 0.10       # permite reassociar em frames “ruins”
+new_track_thresh: 0.50       # evita criar ID novo por detecção instável, sem travar carros rápidos
+match_thresh: 0.80           # permissivo, mas sem excesso
+track_buffer: 600            # frames que um track pode ficar perdido (600 frames = ~20 segundos a 30fps)
+
+proximity_thresh: 0.70       # permissivo, mas reduz matches errados
+appearance_thresh: 0.30      # threshold para distância de aparência (ReID)
+fuse_score: true             # usar fusão de scores
+with_reid: false             # usar Re-Identification (requer fast_reid)
+gmc_method: "none"  # método de compensação de movimento da câmera "sparseOptFlow"
+mot20: false                 # usar dataset MOT20 (afeta algumas lógicas)
+
+# ===== Visual =====
+show_window: true           # exibir janela com visualização (desabilitado - opencv sem suporte GUI)
+draw_boxes: true             # desenhar bounding boxes
