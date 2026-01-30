@@ -64,7 +64,14 @@ def main():
     # ===== detector (seleção automática) =====
     detector_type = cfg.get("detector_type", "yolov7").lower()
     
-    if detector_type == "tflite":
+    if detector_type == "onnx":
+        print("🔧 Usando ONNX Runtime Detector (Raspberry Pi)...")
+        from detector.onnx_detector import ONNXDetector
+        detector = ONNXDetector(
+            model_path=cfg.get("onnx_model", "weights/yolov5nu.onnx"),
+            conf=float(cfg["conf_thres"])
+        )
+    elif detector_type == "tflite":
         print("🔧 Usando TensorFlow Lite Detector (Raspberry Pi)...")
         from detector.tflite_detector import TFLiteDetectorAdvanced
         detector = TFLiteDetectorAdvanced(
