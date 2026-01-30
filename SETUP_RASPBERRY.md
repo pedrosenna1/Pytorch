@@ -65,17 +65,59 @@ pip install pycoral
 
 ### 5. Obter Modelo TFLite
 
-**Opção A: Baixar modelo pré-treinado**
+**Opção A: Baixar de Hugging Face (MAIS CONFIÁVEL)**
+
 ```bash
 cd weights
 
-# YOLOv5n INT8 quantizado (recomendado para Pi)
-wget https://github.com/ultralytics/yolov5/releases/download/v7.0/yolov5n-int8.tflite
+# YOLOv5n INT8 (recomendado para Pi)
+wget https://huggingface.co/spaces/deepquest/yolov5-tflite/resolve/main/yolov5n-int8.tflite
 
-# Ou YOLOv5s INT8 (mais acurado, mas mais lento)
-wget https://github.com/ultralytics/yolov5/releases/download/v7.0/yolov5s-int8.tflite
+# Ou YOLOv5s INT8 (mais acurado)
+wget https://huggingface.co/spaces/deepquest/yolov5-tflite/resolve/main/yolov5s-int8.tflite
 
 cd ..
+```
+
+**Opção B: Baixar do GitHub (se opção A não funcionar)**
+
+```bash
+cd weights
+
+# YOLOv5n
+wget https://github.com/ultralytics/yolov5/releases/download/v7.0/yolov5n-int8.tflite 2>/dev/null || \
+wget https://github.com/ultralytics/yolov5/releases/download/v6.2/yolov5n-int8.tflite
+
+cd ..
+```
+
+**Opção C: Converter localmente (seu computador)**
+
+Se nenhum dos links funcionar, converta no seu **Windows/Linux**:
+
+```bash
+# No seu computador (NÃO no Raspberry)
+pip install ultralytics
+
+python3 << 'EOF'
+from ultralytics import YOLO
+
+# Carregar modelo
+model = YOLO('yolov5n.pt')
+
+# Exportar para TFLite INT8
+model.export(format='tflite', imgsz=640, int8=True)
+
+# Arquivo gerado: yolov5n-int8.tflite
+EOF
+
+# Depois copiar para Raspberry:
+scp yolov5n-int8.tflite usuario@raspberry:~/Pytorch/weights/
+```
+
+**Verificar se o arquivo foi baixado:**
+```bash
+ls -lh ~/Pytorch/weights/*.tflite
 ```
 
 **Opção B: Converter seu próprio modelo**
