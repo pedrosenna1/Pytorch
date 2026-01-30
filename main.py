@@ -61,12 +61,24 @@ def main():
     wanted_ids = set(wanted_classes.values())        # {0,2,3,5,7}
     id_to_name = {v: k for k, v in wanted_classes.items()}
 
-    # ===== detector =====
-    detector = YOLOv7Detector(
-        weights=cfg["weights"],
-        conf=float(cfg["conf_thres"]),
-        device=cfg["device"],
-    )
+    # ===== detector (seleção automática) =====
+    detector_type = cfg.get("detector_type", "yolov7").lower()
+    
+    if detector_type == "tflite":
+        print("🔧 Usando TensorFlow Lite Detector (Raspberry Pi)...")
+        from detector.tflite_detector import TFLiteDetectorAdvanced
+        detector = TFLiteDetectorAdvanced(
+            model_path=cfg.get("tflite_model", "weights/yolov5n-int8.tflite"),
+            conf=float(cfg["conf_thres"]),
+            use_coral=bool(cfg.get("tflite_use_coral", False))
+        )
+    else:
+        print("🔧 Usando YOLOv7 Detector (Desktop)...")
+        detector = YOLOv7Detector(
+            weights=cfg["weights"],
+            conf=float(cfg["conf_thres"]),
+            device=cfg["device"],
+        )
 
     # ===== tracker (BoT-SORT) =====
     tracker = BoTSORT(

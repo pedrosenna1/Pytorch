@@ -1,11 +1,19 @@
 # ===== Stream =====
 stream_url: "https://dev.tixxi.rio/outvideo3/?CODE=003215&KEY=G5325"
 
+# ===== Detector Selection =====
+detector_type: "yolov7"  # "yolov7" (desktop) ou "tflite" (Raspberry Pi)
+# detector_type: "tflite"  # Descomente para usar TensorFlow Lite no Raspberry
+
 # ===== Detector (YOLOv7 PyTorch) =====
 weights: "weights/yolov7.pt"
 device: "cpu"          # "cuda:0" se tiver GPU
 imgsz: 640             # reduzido para melhorar FPS (480 é um bom equilíbrio; 416 é mais rápido)
 conf_thres: 0.20       # MUITO baixo - há duplo filtro no detector
+
+# ===== TFLite Detector (Raspberry Pi) =====
+tflite_model: "weights/yolov5n-int8.tflite"  # Caminho para modelo TFLite
+tflite_use_coral: false  # true se tiver Google Coral TPU
 
 # ===== Confidence Thresholds por Classe =====
 conf_person: 0.40      # Pessoas (mais permissivo)
